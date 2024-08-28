@@ -1,5 +1,5 @@
 # TO DO
-# add user control, allowing users to add more plants
+# add z-index to plant class
 # add argument for images list to Plant constructor
 # add variable width to date display
 # change font for day counter (numbers are not as readable as what they should)
@@ -17,6 +17,9 @@ game_hours = 0
 FPS = 60
 
 # list of images for temporary plant
+plant_width = 53
+plant_height = 122
+
 images = [
     pygame.image.load("temp_plant/plant1.png"),
     pygame.image.load("temp_plant/plant2.png"),
@@ -39,7 +42,7 @@ class Plant(pygame.sprite.Sprite):
 
     # update image according to the age of the plant
     def grow(self):
-        if self.age < len(images):
+        if self.age < len(images) - 1:
             self.age += 1
             self.image = images[self.age]
         else:
@@ -55,7 +58,10 @@ plants.add(plant1)
 plant2 = Plant(600,300)
 plants.add(plant2)
 
-canvas = pygame.display.set_mode((800,600))
+CANVAS_WIDTH = 800
+CANVAS_HEIGHT = 600
+
+canvas = pygame.display.set_mode((CANVAS_WIDTH,CANVAS_HEIGHT))
 pygame.display.set_caption("terraform")
 
 background = pygame.image.load("land.png")
@@ -72,6 +78,15 @@ canvas.fill(morning)
 exit = False
 
 while not exit:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit = True
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = pygame.mouse.get_pos()
+
+            if y > CANVAS_HEIGHT/2:
+                plants.add(Plant(x, y - (plant_height/2)))
+
     clock.tick(FPS)
     seconds = (pygame.time.get_ticks()-start_ticks)/1000
     game_hours += 1
@@ -92,10 +107,6 @@ while not exit:
         canvas.fill(day)
     elif game_hours == 4*FPS:
         canvas.fill(evening)
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            exit = True
 
     plants.update()
 
