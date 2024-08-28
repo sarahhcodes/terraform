@@ -9,14 +9,14 @@ import pygame
 
 pygame.init()
 
-#game clock
+# game clock
 clock = pygame.time.Clock()
 start_ticks = pygame.time.get_ticks()
 days = 1
 game_hours = 0
 FPS = 60
 
-#list of images for temporary plant
+# list of images for temporary plant
 images = [
     pygame.image.load("temp_plant/plant1.png"),
     pygame.image.load("temp_plant/plant2.png"),
@@ -26,27 +26,30 @@ images = [
     pygame.image.load("temp_plant/plant6.png")
 ]
 
-#plant sprite constructor
+# plant sprite constructor
 class Plant(pygame.sprite.Sprite):
-    #initalize constructor
+    # initalize constructor
     #TO DO -> add argument for images list (to allow for other plants)
     def __init__(self, x, y):
         super().__init__()
-        self.image = images[days-1]
+        self.age = 0
+        self.image = images[self.age]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
 
-    #update image according to the day
+    # update image according to the age of the plant
     def grow(self):
-        if days <= len(images):
-            self.image = images[days-1]
+        if self.age < len(images):
+            self.age += 1
+            self.image = images[self.age]
         else:
+            self.age += 1
             self.image = images[len(images) - 1]
 
-#group for plants
+# group for plants
 plants = pygame.sprite.Group()
 
-#initalize plants (for testing)
+# initalize plants (for testing)
 plant1 = Plant(500,500)
 plants.add(plant1)
 plant2 = Plant(600,300)
@@ -80,6 +83,11 @@ while not exit:
         days += 1
         day_text = font.render("day " + str(days), False, (255,255,255))
         print(days)
+        
+        # update plants
+        for plant in plants:
+            plant.grow()
+
     elif game_hours == 2*FPS:
         canvas.fill(day)
     elif game_hours == 4*FPS:
@@ -89,14 +97,11 @@ while not exit:
         if event.type == pygame.QUIT:
             exit = True
 
-    for plant in plants:
-        plant.grow()
-
     plants.update()
 
     canvas.blit(background, (0,0))  
 
-    #draw day counter
+    # draw day counter
     # TO DO -> create adaptive width
     pygame.draw.rect(canvas, (0,0,0), pygame.Rect(45,45,95,50))
     canvas.blit(day_text, (50, 50))    
