@@ -1,5 +1,4 @@
 # TO DO
-# put day display into class
 # add z-index to plant class
 # change font for day counter (numbers are not as readable as what they should)
 # tidy up code w/main function
@@ -8,25 +7,21 @@ import pygame
 
 pygame.init()
 
+CANVAS_WIDTH = 800
+CANVAS_HEIGHT = 600
+
+canvas = pygame.display.set_mode((CANVAS_WIDTH,CANVAS_HEIGHT))
+pygame.display.set_caption("terraform")
+
+background = pygame.image.load("land.png")
+font = pygame.font.Font("SourceCodePro-VariableFont_wght.ttf", 32)
+
 # game clock
 clock = pygame.time.Clock()
 start_ticks = pygame.time.get_ticks()
 days = 1
 game_hours = 0
 FPS = 60
-
-# list of images for temporary plant
-plant_width = 53
-plant_height = 122
-
-white_flower = [
-    pygame.image.load("temp_plant/plant1.png"),
-    pygame.image.load("temp_plant/plant2.png"),
-    pygame.image.load("temp_plant/plant3.png"),
-    pygame.image.load("temp_plant/plant4.png"),
-    pygame.image.load("temp_plant/plant5.png"),
-    pygame.image.load("temp_plant/plant6.png")
-]
 
 # plant sprite constructor
 class Plant(pygame.sprite.Sprite):
@@ -48,6 +43,31 @@ class Plant(pygame.sprite.Sprite):
             self.age += 1
             self.image = self.plant_type[len(self.plant_type) - 1]
 
+# day display class
+class Day:
+    def __init__(self):
+        self.text = "day " + str(days)
+        self.render = font.render(self.text, False, (255,255,255))
+        self.width, self.height = font.size(self.text)
+    
+    def update(self):
+        self.text = "day " + str(days)
+        self.render = font.render(self.text, False, (255,255,255))
+        self.width, self.height = font.size(self.text)
+
+# list of images for temporary plant
+plant_width = 53
+plant_height = 122
+
+white_flower = [
+    pygame.image.load("temp_plant/plant1.png"),
+    pygame.image.load("temp_plant/plant2.png"),
+    pygame.image.load("temp_plant/plant3.png"),
+    pygame.image.load("temp_plant/plant4.png"),
+    pygame.image.load("temp_plant/plant5.png"),
+    pygame.image.load("temp_plant/plant6.png")
+]
+
 # group for plants
 plants = pygame.sprite.Group()
 
@@ -57,28 +77,20 @@ plants.add(plant1)
 plant2 = Plant(white_flower, 600,300)
 plants.add(plant2)
 
-CANVAS_WIDTH = 800
-CANVAS_HEIGHT = 600
-
-canvas = pygame.display.set_mode((CANVAS_WIDTH,CANVAS_HEIGHT))
-pygame.display.set_caption("terraform")
-
-background = pygame.image.load("land.png")
-font = pygame.font.Font("PixelifySans-VariableFont_wght.ttf", 32)
-# make into class?
-day_text = "day " + str(days)
-day_render = font.render(day_text, False, (255,255,255))
-day_width, day_height = font.size(day_text)
+# create day display instance
+day_display = Day()
 
 # define colours for different times of the day
 morning = (255, 238, 130)
 day = (130, 211, 255)
 evening = (155,130,255)
 
+# initalize canvas
 canvas.fill(morning)
 
 exit = False
 
+# game loop
 while not exit:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -99,9 +111,7 @@ while not exit:
         canvas.fill(morning)
         game_hours = 0
         days += 1
-        day_text = "day " + str(days)
-        day_render = font.render(day_text, False, (255,255,255))
-        day_width, day_height = font.size(day_text)
+        day_display.update()
         print(days)
         
         # update plants
@@ -118,8 +128,8 @@ while not exit:
     canvas.blit(background, (0,0))  
 
     # draw day counter
-    pygame.draw.rect(canvas, (0,0,0), pygame.Rect(45, 45, day_width + 15, day_height + 10))
-    canvas.blit(day_render, (50, 50))    
+    pygame.draw.rect(canvas, (0,0,0), pygame.Rect(45, 45, day_display.width + 15, day_display.height + 10))
+    canvas.blit(day_display.render, (50, 50))    
     
     plants.draw(canvas)
 
