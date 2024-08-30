@@ -1,6 +1,7 @@
 # TO DO
+# add ability to change plants
+# add challenge to plant growth
 # add z-index to plant class
-# change font for day counter (numbers are not as readable as what they should)
 # tidy up code w/main function
 
 import pygame
