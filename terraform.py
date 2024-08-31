@@ -15,6 +15,8 @@ pygame.display.set_caption("terraform")
 
 background = pygame.image.load("land.png")
 font = pygame.font.Font("SourceCodePro-VariableFont_wght.ttf", 32)
+font_small = pygame.font.Font("SourceCodePro-VariableFont_wght.ttf", 16)
+
 
 # game clock
 clock = pygame.time.Clock()
@@ -56,6 +58,14 @@ class Day:
         self.render = font.render(self.text, False, (255,255,255))
         self.width, self.height = font.size(self.text)
 
+# menu class
+class Menu:
+    def __init__(self):
+        self.text = "choose plant"
+        self.render = font_small.render(self.text, False, (255,255,255))
+        self.width, self.height = font_small.size(self.text)
+
+
 # list of images for temporary plant
 plant_width = 53
 plant_height = 122
@@ -81,6 +91,9 @@ plants.add(plant2)
 # create day display instance
 day_display = Day()
 
+# create menu
+menu = Menu()
+
 # define colours for different times of the day
 morning = (255, 238, 130)
 day = (130, 211, 255)
@@ -93,15 +106,17 @@ exit = False
 
 # game loop
 while not exit:
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit = True
         if event.type == pygame.MOUSEBUTTONDOWN:
-            x, y = pygame.mouse.get_pos()
             # draw flower if mouse is clicked on ground
+            if mouse_y > CANVAS_HEIGHT/2:
+                plants.add(Plant(white_flower, mouse_x, mouse_y - (plant_height/2)))
             # TO DO -> allow for user to choose different plants
-            if y > CANVAS_HEIGHT/2:
-                plants.add(Plant(white_flower, x, y - (plant_height/2)))
+            
 
     clock.tick(FPS)
     seconds = (pygame.time.get_ticks()-start_ticks)/1000
@@ -131,6 +146,12 @@ while not exit:
     # draw day counter
     pygame.draw.rect(canvas, (0,0,0), pygame.Rect(45, 45, day_display.width + 15, day_display.height + 10))
     canvas.blit(day_display.render, (50, 50))    
+
+    # draw menu
+    # add hover effect
+    pygame.draw.rect(canvas, (0,0,0), pygame.Rect(45 + day_display.width + 35, 45, 
+                                                  menu.width + 15, day_display.height + 10))
+    canvas.blit(menu.render, (50 + day_display.width + 35, 60)) 
     
     plants.draw(canvas)
 
