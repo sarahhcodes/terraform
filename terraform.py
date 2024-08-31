@@ -1,7 +1,6 @@
 # TO DO
 # add ability to change plants
 # add challenge to plant growth
-# add z-index to plant class
 # tidy up code w/main function
 
 import pygame
@@ -34,6 +33,7 @@ class Plant(pygame.sprite.Sprite):
         self.image = self.plant_type[self.age]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
+        self._layer = y # allows for plants placed lower on the screen to overlap plants higher
 
     # update image according to the age of the plant
     def grow(self):
@@ -70,7 +70,7 @@ white_flower = [
 ]
 
 # group for plants
-plants = pygame.sprite.Group()
+plants = pygame.sprite.LayeredUpdates()
 
 # initalize plants (for testing)
 plant1 = Plant(white_flower, 500,500)
