@@ -4,11 +4,23 @@
 # tidy up code w/main function
 
 import pygame
+import os
+
+# fuction to get subdirectories
+def get_subdirectories(dir):
+    return [name for name in os.listdir(dir)
+            if os.path.isdir(os.path.join(dir, name))]
 
 pygame.init()
 
 CANVAS_WIDTH = 800
 CANVAS_HEIGHT = 600
+
+# get list of image directories
+image_directories = get_subdirectories('plants')
+print(image_directories)
+
+# TO DO -> fuction to put images for different plants into into a list
 
 canvas = pygame.display.set_mode((CANVAS_WIDTH,CANVAS_HEIGHT))
 pygame.display.set_caption("terraform")
