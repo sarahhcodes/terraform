@@ -4,6 +4,7 @@
 # tidy up code w/main function
 
 import pygame
+import plant_library # list of all plants
 
 pygame.init()
 
@@ -30,7 +31,7 @@ class Plant(pygame.sprite.Sprite):
     def __init__(self, plant_type, x, y):
         super().__init__()
         self.age = 0
-        self.plant_type = plant_type
+        self.plant_type = plant_type["images"]
         self.image = self.plant_type[self.age]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
@@ -59,26 +60,13 @@ class Text:
         self.render = self.font.render(self.text, False, font_color)
         self.width, self.height = self.font.size(self.text)
 
-# list of images for temporary plant
-plant_width = 53
-plant_height = 122
-
-white_flower = [
-    pygame.image.load("temp_plant/plant1.png"),
-    pygame.image.load("temp_plant/plant2.png"),
-    pygame.image.load("temp_plant/plant3.png"),
-    pygame.image.load("temp_plant/plant4.png"),
-    pygame.image.load("temp_plant/plant5.png"),
-    pygame.image.load("temp_plant/plant6.png")
-]
-
 # group for plants
 plants = pygame.sprite.LayeredUpdates()
 
 # initalize plants (for testing)
-plant1 = Plant(white_flower, 500,500)
+plant1 = Plant(plant_library.white_flower, 500,500)
 plants.add(plant1)
-plant2 = Plant(white_flower, 600,300)
+plant2 = Plant(plant_library.white_flower, 600,300)
 plants.add(plant2)
 
 # create day display instance
@@ -96,7 +84,7 @@ evening = (155, 130, 255)
 canvas.fill(morning)
 
 exit = False
-current_plant = white_flower
+current_plant = plant_library.white_flower
 
 # game loop
 while not exit:
@@ -108,7 +96,7 @@ while not exit:
         if event.type == pygame.MOUSEBUTTONDOWN:
             # draw flower if mouse is clicked on ground
             if mouse_y > CANVAS_HEIGHT/2:
-                plants.add(Plant(current_plant, mouse_x, mouse_y - (plant_height/2)))
+                plants.add(Plant(current_plant, mouse_x, mouse_y - (current_plant['plant_height']/2)))
             # TO DO -> allow for user to choose different plants
             
 
