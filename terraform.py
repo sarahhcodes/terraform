@@ -4,19 +4,36 @@
 # tidy up code w/main function
 
 import pygame
+import os
+
+# fuction to get subdirectories
+def get_subdirectories(dir):
+    return [name for name in os.listdir(dir)
+            if os.path.isdir(os.path.join(dir, name))]
 
 pygame.init()
 
 CANVAS_WIDTH = 800
 CANVAS_HEIGHT = 600
 
+# get list of image directories
+image_directories = get_subdirectories('plants')
+print(image_directories)
+
+# TO DO -> fuction to put images for different plants into a list
+for directory in image_directories:
+    print(directory)
+    for f in os.listdir(os.path.join('plants', directory)): # <----- put this into a numbered list (plant1, plant2, etc)
+        if os.path.isfile(os.path.join(directory, f)):
+            print(f)
+            
+
 canvas = pygame.display.set_mode((CANVAS_WIDTH,CANVAS_HEIGHT))
 pygame.display.set_caption("terraform")
 
 background = pygame.image.load("land.png")
-font = pygame.font.Font("SourceCodePro-VariableFont_wght.ttf", 32)
-font_small = pygame.font.Font("SourceCodePro-VariableFont_wght.ttf", 16)
-
+typeface = "SourceCodePro-VariableFont_wght.ttf"
+font_color = (255, 255, 255)
 
 # game clock
 clock = pygame.time.Clock()
@@ -46,25 +63,19 @@ class Plant(pygame.sprite.Sprite):
             self.age += 1
             self.image = self.plant_type[len(self.plant_type) - 1]
 
-# day display class
-class Day:
-    def __init__(self):
-        self.text = "day " + str(days)
-        self.render = font.render(self.text, False, (255,255,255))
-        self.width, self.height = font.size(self.text)
+# text display constructor
+class Text:
+    def __init__(self, text, size):
+        self.font = pygame.font.Font(typeface, size)
+        self.text = text
+        self.render = self.font.render(self.text, False, font_color)
+        self.width, self.height = self.font.size(self.text)
     
-    def update(self):
-        self.text = "day " + str(days)
-        self.render = font.render(self.text, False, (255,255,255))
-        self.width, self.height = font.size(self.text)
-
-# menu class
-class Menu:
-    def __init__(self):
-        self.text = "choose plant"
-        self.render = font_small.render(self.text, False, (255,255,255))
-        self.width, self.height = font_small.size(self.text)
-
+    # update text & rerender
+    def update(self, text):
+        self.text = text
+        self.render = self.font.render(self.text, False, font_color)
+        self.width, self.height = self.font.size(self.text)
 
 # list of images for temporary plant
 plant_width = 53
@@ -89,15 +100,15 @@ plant2 = Plant(white_flower, 600,300)
 plants.add(plant2)
 
 # create day display instance
-day_display = Day()
+day_display = Text("day " + str(days), 32)
 
 # create menu
-menu = Menu()
+menu = Text("choose plant", 16)
 
 # define colours for different times of the day
 morning = (255, 238, 130)
 day = (130, 211, 255)
-evening = (155,130,255)
+evening = (155, 130, 255)
 
 # initalize canvas
 canvas.fill(morning)
@@ -127,7 +138,7 @@ while not exit:
         canvas.fill(morning)
         game_hours = 0
         days += 1
-        day_display.update()
+        day_display.update("day " + str(days))
         print(days)
         
         # update plants
