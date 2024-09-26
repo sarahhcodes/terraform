@@ -5,16 +5,11 @@
 
 import pygame
 
-# fuction to get subdirectories
-def get_subdirectories(dir):
-    return [name for name in os.listdir(dir)
-            if os.path.isdir(os.path.join(dir, name))]
-
 pygame.init()
 
 CANVAS_WIDTH = 800
 CANVAS_HEIGHT = 600
-            
+
 canvas = pygame.display.set_mode((CANVAS_WIDTH,CANVAS_HEIGHT))
 pygame.display.set_caption("terraform")
 
