@@ -4,7 +4,6 @@
 # tidy up code w/main function
 
 import pygame
-import os
 
 # fuction to get subdirectories
 def get_subdirectories(dir):
@@ -15,19 +14,7 @@ pygame.init()
 
 CANVAS_WIDTH = 800
 CANVAS_HEIGHT = 600
-
-# get list of image directories
-image_directories = get_subdirectories('plants')
-print(image_directories)
-
-# TO DO -> fuction to put images for different plants into a list
-for directory in image_directories:
-    print(directory)
-    for f in os.listdir(os.path.join('plants', directory)): # <----- put this into a numbered list (plant1, plant2, etc)
-        if os.path.isfile(os.path.join(directory, f)):
-            print(f)
             
-
 canvas = pygame.display.set_mode((CANVAS_WIDTH,CANVAS_HEIGHT))
 pygame.display.set_caption("terraform")
 
@@ -114,6 +101,7 @@ evening = (155, 130, 255)
 canvas.fill(morning)
 
 exit = False
+current_plant = white_flower
 
 # game loop
 while not exit:
@@ -125,7 +113,7 @@ while not exit:
         if event.type == pygame.MOUSEBUTTONDOWN:
             # draw flower if mouse is clicked on ground
             if mouse_y > CANVAS_HEIGHT/2:
-                plants.add(Plant(white_flower, mouse_x, mouse_y - (plant_height/2)))
+                plants.add(Plant(current_plant, mouse_x, mouse_y - (plant_height/2)))
             # TO DO -> allow for user to choose different plants
             
 
