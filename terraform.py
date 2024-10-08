@@ -1,7 +1,6 @@
 # TO DO
 # add ability to change plants
 # add challenge to plant growth
-# tidy up code w/main function
 
 import pygame
 import plant_library # list of all plants
@@ -17,6 +16,11 @@ pygame.display.set_caption("terraform")
 background = pygame.image.load("land.png")
 typeface = "SourceCodePro-VariableFont_wght.ttf"
 font_color = (255, 255, 255)
+
+# define background colours for different times of the day
+morning = (255, 238, 130)
+day = (130, 211, 255)
+evening = (155, 130, 255)
 
 # game clock
 clock = pygame.time.Clock()
@@ -75,11 +79,6 @@ day_display = Text("day " + str(days), 32)
 # create menu
 menu = Text("choose plant", 16)
 
-# define colours for different times of the day
-morning = (255, 238, 130)
-day = (130, 211, 255)
-evening = (155, 130, 255)
-
 # initalize canvas
 canvas.fill(morning)
 
@@ -89,6 +88,7 @@ current_plant = plant_library.white_flower
 # game loop
 while not exit:
     mouse_x, mouse_y = pygame.mouse.get_pos()
+    menu_x = 50 + day_display.width + 35
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -98,6 +98,8 @@ while not exit:
             if mouse_y > CANVAS_HEIGHT/2:
                 plants.add(Plant(current_plant, mouse_x, mouse_y - (current_plant['plant_height']/2)))
             # TO DO -> allow for user to choose different plants
+            elif menu_x <= mouse_x >= menu_x + menu.width + 15:
+                pass
             
 
     clock.tick(FPS)
@@ -131,9 +133,9 @@ while not exit:
 
     # draw menu
     # add hover effect
-    pygame.draw.rect(canvas, (0,0,0), pygame.Rect(45 + day_display.width + 35, 45, 
+    pygame.draw.rect(canvas, (0,0,0), pygame.Rect(menu_x - 5, 45, 
                                                   menu.width + 15, day_display.height + 10))
-    canvas.blit(menu.render, (50 + day_display.width + 35, 60)) 
+    canvas.blit(menu.render, (menu_x, 60)) 
     
     plants.draw(canvas)
 
