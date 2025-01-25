@@ -1,8 +1,10 @@
 # TO DO
-# add ability to change plants
+# create toolbar -> icons for watering, flower, and fern
 # add challenge to plant growth
+# adjust fern so that it sprouts on mouse rather than off to the left
 
 import pygame
+from pygame.sprite import Group
 import plant_library # list of all plants
 
 pygame.init()
@@ -39,16 +41,48 @@ class Plant(pygame.sprite.Sprite):
         self.image = self.plant_type[self.age]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
+        self.watered = True # SHOULD DEFAULT TO FALSE
         self._layer = y # allows for plants placed lower on the screen to overlap plants higher
 
     # update image according to the age of the plant
     def grow(self):
-        if self.age < len(self.plant_type) - 1:
-            self.age += 1
-            self.image = self.plant_type[self.age]
-        else:
-            self.age += 1
-            self.image = self.plant_type[len(self.plant_type) - 1]
+        if self.watered: # make sure plant is watered before growing
+            if self.age < len(self.plant_type) - 1:
+                self.age += 1
+                self.image = self.plant_type[self.age]
+            else:
+                self.age += 1
+                self.image = self.plant_type[len(self.plant_type) - 1]
+
+# button constructor
+class Button:
+    def __init__(self, x, y, image):
+        self.image = image
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
+        self.clicked = False
+        # set up image so that it changes depending on button state
+    
+    def draw(self):
+        action = False
+
+        # get mouse position
+        pos = pygame.mouse.get_pos()
+
+        # check mouseover condition
+        if self.rect.collidepoint(pos):
+            # change button image to hover state
+            # check click condition
+            if pygame.mouse.get_pressed()[0] == 1:
+                action = True
+                self.clicked = True
+            if pygame.mouse.getpressed()[0] == 0:
+                self.clicked = False
+
+        # draw image
+        screen.blit(self.image, (self.rect.x, self.rect.y))
+
+        return action
 
 # text display constructor
 class Text:
@@ -78,12 +112,13 @@ day_display = Text("day " + str(days), 32)
 
 # create menu
 menu = Text("choose plant", 16)
+menuColor = (0,0,0)
 
 # initalize canvas
 canvas.fill(morning)
 
 exit = False
-current_plant = plant_library.white_flower
+current_plant = plant_library.fern
 
 # game loop
 while not exit:
@@ -94,12 +129,17 @@ while not exit:
         if event.type == pygame.QUIT:
             exit = True
         if event.type == pygame.MOUSEBUTTONDOWN:
+            for plant in plants:
+                if plant.rect.collidepoint(mouse_x,mouse_y):
+                    print('plant!')
             # draw flower if mouse is clicked on ground
             if mouse_y > CANVAS_HEIGHT/2:
                 plants.add(Plant(current_plant, mouse_x, mouse_y - (current_plant['plant_height']/2)))
             # TO DO -> allow for user to choose different plants
-            elif menu_x <= mouse_x >= menu_x + menu.width + 15:
-                pass
+            #if menu.rect.collidepoint(mouse_x,mouse_y):
+                #pass
+                #menuColor = (50,50,50)
+                #print("change plant!")
             
 
     clock.tick(FPS)
@@ -133,7 +173,7 @@ while not exit:
 
     # draw menu
     # add hover effect
-    pygame.draw.rect(canvas, (0,0,0), pygame.Rect(menu_x - 5, 45, 
+    pygame.draw.rect(canvas, menuColor, pygame.Rect(menu_x - 5, 45, 
                                                   menu.width + 15, day_display.height + 10))
     canvas.blit(menu.render, (menu_x, 60)) 
     
