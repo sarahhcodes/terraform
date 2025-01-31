@@ -1,7 +1,6 @@
 # TO DO
 # create toolbar -> icons for watering, flower, and fern
 # add challenge to plant growth
-# adjust fern so that it sprouts on mouse rather than off to the left
 
 import pygame
 from pygame.sprite import Group
@@ -39,8 +38,9 @@ class Plant(pygame.sprite.Sprite):
         self.age = 0
         self.plant_type = plant_type["images"]
         self.image = self.plant_type[self.age]
+        self.start_point = plant_type["start_draw"]
         self.rect = self.image.get_rect()
-        self.rect.center = (x, y)
+        self.rect.center = (x + self.start_point, y) #plant_type should contain pixel value where drawing starts
         self.watered = True # SHOULD DEFAULT TO FALSE
         self._layer = y # allows for plants placed lower on the screen to overlap plants higher
 
@@ -80,7 +80,7 @@ class Button:
                 self.clicked = False
 
         # draw image
-        screen.blit(self.image, (self.rect.x, self.rect.y))
+        canvas.blit(self.image, (self.rect.x, self.rect.y))
 
         return action
 

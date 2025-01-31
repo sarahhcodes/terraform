@@ -3,6 +3,7 @@ import pygame
 fern = {
     "plant_width" : 119,
     "plant_height" : 150,
+    "start_draw" : 28,
     "images" :
     [
     pygame.image.load("plants/fern/fern0.png"),
@@ -33,6 +34,7 @@ flower = { # need to resize all images
 white_flower = {
     "plant_width" : 53,
     "plant_height" : 122,
+    "start_draw": 30,
     "images" :
     [
     pygame.image.load("plants/white_flower/plant1.png"),
