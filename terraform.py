@@ -1,6 +1,12 @@
 # TO DO
-# create toolbar -> icons for watering, flower, and fern
-# add challenge to plant growth
+# add onClick event to buttons (change color, highlight, etc)
+# create new plant (tree)
+# add tree button
+# add start page
+# add goal screen (make the landscape green)
+# add exit button
+# add reset button
+# tidy code
 
 import pygame
 from pygame.sprite import Group
@@ -15,6 +21,7 @@ canvas = pygame.display.set_mode((CANVAS_WIDTH,CANVAS_HEIGHT))
 pygame.display.set_caption("terraform")
 
 background = pygame.image.load("land.png")
+menu_background = pygame.image.load("menu_background.png").convert_alpha()
 typeface = "SourceCodePro-VariableFont_wght.ttf"
 font_color = (255, 255, 255)
 
@@ -56,8 +63,9 @@ class Plant(pygame.sprite.Sprite):
 
 # button constructor
 class Button:
-    def __init__(self, x, y, image):
-        self.image = image
+    def __init__(self, x, y, main_image, hover_image):
+        self.image = main_image
+        self.hover = hover_image
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.clicked = False
@@ -71,16 +79,18 @@ class Button:
 
         # check mouseover condition
         if self.rect.collidepoint(pos):
-            # change button image to hover state
+            # draw hover image
+            canvas.blit(self.hover, (self.rect.x, self.rect.y))
+
             # check click condition
             if pygame.mouse.get_pressed()[0] == 1:
                 action = True
                 self.clicked = True
-            if pygame.mouse.getpressed()[0] == 0:
+            if pygame.mouse.get_pressed()[0] == 0:
                 self.clicked = False
-
-        # draw image
-        canvas.blit(self.image, (self.rect.x, self.rect.y))
+        else:
+            # draw image
+            canvas.blit(self.image, (self.rect.x, self.rect.y))
 
         return action
 
@@ -102,10 +112,10 @@ class Text:
 plants = pygame.sprite.LayeredUpdates()
 
 # initalize plants (for testing)
-plant1 = Plant(plant_library.white_flower, 500,500)
-plants.add(plant1)
-plant2 = Plant(plant_library.white_flower, 600,300)
-plants.add(plant2)
+#plant1 = Plant(plant_library.white_flower, 500,500)
+#plants.add(plant1)
+#plant2 = Plant(plant_library.white_flower, 600,300)
+#plants.add(plant2)
 
 # create day display instance
 day_display = Text("day " + str(days), 32)
@@ -116,6 +126,10 @@ menuColor = (0,0,0)
 
 # initalize canvas
 canvas.fill(morning)
+
+# initalize buttons
+button_flower = Button(326, 555, pygame.image.load("button_flower.png"), pygame.image.load("button_flower_hover.png"))
+button_fern = Button(500, 555, pygame.image.load("button_fern.png"), pygame.image.load("button_fern_hover.png"))
 
 exit = False
 current_plant = plant_library.fern
@@ -133,13 +147,15 @@ while not exit:
                 if plant.rect.collidepoint(mouse_x,mouse_y):
                     print('plant!')
             # draw flower if mouse is clicked on ground
-            if mouse_y > CANVAS_HEIGHT/2:
+            if mouse_y > CANVAS_HEIGHT/2 and mouse_y < 543:
                 plants.add(Plant(current_plant, mouse_x, mouse_y - (current_plant['plant_height']/2)))
             # TO DO -> allow for user to choose different plants
             #if menu.rect.collidepoint(mouse_x,mouse_y):
                 #pass
                 #menuColor = (50,50,50)
                 #print("change plant!")
+
+                #90 543 699
             
 
     clock.tick(FPS)
@@ -166,16 +182,24 @@ while not exit:
     plants.update()
 
     canvas.blit(background, (0,0))  
+    canvas.blit(menu_background, (0,0)) 
+
+    # draw menu buttons
+    if button_flower.draw():
+        current_plant = plant_library.flower
+
+    if button_fern.draw():
+        current_plant = plant_library.fern
 
     # draw day counter
-    pygame.draw.rect(canvas, (0,0,0), pygame.Rect(45, 45, day_display.width + 15, day_display.height + 10))
-    canvas.blit(day_display.render, (50, 50))    
+    #pygame.draw.rect(canvas, (0,0,0), pygame.Rect(45, 45, day_display.width + 15, day_display.height + 10))
+    #canvas.blit(day_display.render, (50, 50))    
 
     # draw menu
     # add hover effect
-    pygame.draw.rect(canvas, menuColor, pygame.Rect(menu_x - 5, 45, 
-                                                  menu.width + 15, day_display.height + 10))
-    canvas.blit(menu.render, (menu_x, 60)) 
+    #pygame.draw.rect(canvas, menuColor, pygame.Rect(menu_x - 5, 45, 
+    #                                              menu.width + 15, day_display.height + 10))
+    #canvas.blit(menu.render, (menu_x, 60)) 
     
     plants.draw(canvas)
 

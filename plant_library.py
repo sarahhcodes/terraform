@@ -18,8 +18,9 @@ fern = {
 }
 
 flower = { # need to resize all images
-    "plant_width" : 53, # need to correct
+    "plant_width" : 49, # need to correct
     "plant_height" : 122, # need to correct
+    "start_draw" : 10,
     "images" :
     [
     pygame.image.load("plants/flower/flower0.png"),
