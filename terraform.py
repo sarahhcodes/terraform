@@ -1,4 +1,5 @@
 # TO DO
+# fix flickering on button click
 # change color of plant button when selected
 # clean up background pixels of trees images
 # do something with empty spaces on either side of the menu
@@ -21,8 +22,8 @@ CANVAS_HEIGHT = 600
 canvas = pygame.display.set_mode((CANVAS_WIDTH,CANVAS_HEIGHT))
 pygame.display.set_caption("terraform")
 
-background = pygame.image.load("land.png")
-menu_background = pygame.image.load("menu_background.png").convert_alpha()
+background = pygame.image.load("images/land.png")
+menu_background = pygame.image.load("images/menu_background.png").convert_alpha()
 typeface = "SourceCodePro-VariableFont_wght.ttf"
 font_color = (255, 255, 255)
 
@@ -129,9 +130,9 @@ menuColor = (0,0,0)
 canvas.fill(morning)
 
 # initalize buttons
-button_tree = Button(200, 555, pygame.image.load("button_tree.png"), pygame.image.load("button_tree_hover.png"))
-button_flower = Button(326, 555, pygame.image.load("button_flower.png"), pygame.image.load("button_flower_hover.png"))
-button_fern = Button(500, 555, pygame.image.load("button_fern.png"), pygame.image.load("button_fern_hover.png"))
+button_tree = Button(200, 555, pygame.image.load("images/button_tree.png"), pygame.image.load("images/button_tree_hover.png"))
+button_flower = Button(326, 555, pygame.image.load("images/button_flower.png"), pygame.image.load("images/button_flower_hover.png"))
+button_fern = Button(500, 555, pygame.image.load("images/button_fern.png"), pygame.image.load("images/button_fern_hover.png"))
 
 exit = False
 current_plant = plant_library.fern
