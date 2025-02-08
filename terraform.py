@@ -1,5 +1,4 @@
 # TO DO
-# fix flickering on button click
 # change color of plant button when selected
 # clean up background pixels of trees images
 # do something with empty spaces on either side of the menu
@@ -7,7 +6,6 @@
 # add goal screen (make the landscape green)
 # add exit button
 # add reset button
-# remove reference to watering
 # tidy code
 
 import pygame
@@ -50,18 +48,16 @@ class Plant(pygame.sprite.Sprite):
         self.start_point = plant_type["start_draw"]
         self.rect = self.image.get_rect()
         self.rect.center = (x + self.start_point, y) #plant_type should contain pixel value where drawing starts
-        self.watered = True # SHOULD DEFAULT TO FALSE
         self._layer = click # allows for plants placed lower on the screen to overlap plants higher
 
     # update image according to the age of the plant
     def grow(self):
-        if self.watered: # make sure plant is watered before growing
-            if self.age < len(self.plant_type) - 1:
-                self.age += 1
-                self.image = self.plant_type[self.age]
-            else:
-                self.age += 1
-                self.image = self.plant_type[len(self.plant_type) - 1]
+        if self.age < len(self.plant_type) - 1:
+            self.age += 1
+            self.image = self.plant_type[self.age]
+        else:
+            self.age += 1
+            self.image = self.plant_type[len(self.plant_type) - 1]
 
 # button constructor
 class Button:
@@ -96,35 +92,8 @@ class Button:
 
         return action
 
-# text display constructor
-class Text:
-    def __init__(self, text, size):
-        self.font = pygame.font.Font(typeface, size)
-        self.text = text
-        self.render = self.font.render(self.text, False, font_color)
-        self.width, self.height = self.font.size(self.text)
-    
-    # update text & rerender
-    def update(self, text):
-        self.text = text
-        self.render = self.font.render(self.text, False, font_color)
-        self.width, self.height = self.font.size(self.text)
-
 # group for plants
 plants = pygame.sprite.LayeredUpdates()
-
-# initalize plants (for testing)
-#plant1 = Plant(plant_library.white_flower, 500,500)
-#plants.add(plant1)
-#plant2 = Plant(plant_library.white_flower, 600,300)
-#plants.add(plant2)
-
-# create day display instance
-day_display = Text("day " + str(days), 32)
-
-# create menu
-menu = Text("choose plant", 16)
-menuColor = (0,0,0)
 
 # initalize canvas
 canvas.fill(morning)
@@ -135,42 +104,31 @@ button_flower = Button(326, 555, pygame.image.load("images/button_flower.png"), 
 button_fern = Button(500, 555, pygame.image.load("images/button_fern.png"), pygame.image.load("images/button_fern_hover.png"))
 
 exit = False
-current_plant = plant_library.fern
+current_plant = plant_library.fern # start game with fern
 
 # game loop
 while not exit:
     mouse_x, mouse_y = pygame.mouse.get_pos()
-    menu_x = 50 + day_display.width + 35
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit = True
         if event.type == pygame.MOUSEBUTTONDOWN:
-            for plant in plants:
-                if plant.rect.collidepoint(mouse_x,mouse_y):
-                    print('plant!')
-            # draw flower if mouse is clicked on ground
+            # draw plant if mouse is clicked on ground
             if mouse_y > CANVAS_HEIGHT/2 and mouse_y < 543:
                 plants.add(Plant(current_plant, mouse_x, mouse_y - (current_plant['plant_height']/2), mouse_y))
-            # TO DO -> allow for user to choose different plants
-            #if menu.rect.collidepoint(mouse_x,mouse_y):
-                #pass
-                #menuColor = (50,50,50)
-                #print("change plant!")
-
-                #90 543 699
             
-
+    # in game clock
     clock.tick(FPS)
     seconds = (pygame.time.get_ticks()-start_ticks)/1000
     game_hours += 1
     
+    # action for the end of each day
     # for this stage of testing, 1 day equals 6 seconds
     if game_hours == 6*FPS:
         canvas.fill(morning)
         game_hours = 0
         days += 1
-        day_display.update("day " + str(days))
         print(days)
         
         # update plants
@@ -190,20 +148,10 @@ while not exit:
     # draw menu buttons
     if button_tree.draw():
         current_plant = plant_library.tree
-    elif button_flower.draw():
+    if button_flower.draw():
         current_plant = plant_library.flower
-    elif button_fern.draw():
+    if button_fern.draw():
         current_plant = plant_library.fern
-
-    # draw day counter
-    #pygame.draw.rect(canvas, (0,0,0), pygame.Rect(45, 45, day_display.width + 15, day_display.height + 10))
-    #canvas.blit(day_display.render, (50, 50))    
-
-    # draw menu
-    # add hover effect
-    #pygame.draw.rect(canvas, menuColor, pygame.Rect(menu_x - 5, 45, 
-    #                                              menu.width + 15, day_display.height + 10))
-    #canvas.blit(menu.render, (menu_x, 60)) 
     
     plants.draw(canvas)
 
