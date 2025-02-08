@@ -1,11 +1,12 @@
 # TO DO
-# add onClick event to buttons (change color, highlight, etc)
-# create new plant (tree)
-# add tree button
+# change color of plant button when selected
+# clean up background pixels of trees images
+# do something with empty spaces on either side of the menu
 # add start page
 # add goal screen (make the landscape green)
 # add exit button
 # add reset button
+# remove reference to watering
 # tidy code
 
 import pygame
@@ -40,7 +41,7 @@ FPS = 60
 # plant sprite constructor
 class Plant(pygame.sprite.Sprite):
     # initalize constructor
-    def __init__(self, plant_type, x, y):
+    def __init__(self, plant_type, x, y, click):
         super().__init__()
         self.age = 0
         self.plant_type = plant_type["images"]
@@ -49,7 +50,7 @@ class Plant(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (x + self.start_point, y) #plant_type should contain pixel value where drawing starts
         self.watered = True # SHOULD DEFAULT TO FALSE
-        self._layer = y # allows for plants placed lower on the screen to overlap plants higher
+        self._layer = click # allows for plants placed lower on the screen to overlap plants higher
 
     # update image according to the age of the plant
     def grow(self):
@@ -128,6 +129,7 @@ menuColor = (0,0,0)
 canvas.fill(morning)
 
 # initalize buttons
+button_tree = Button(200, 555, pygame.image.load("button_tree.png"), pygame.image.load("button_tree_hover.png"))
 button_flower = Button(326, 555, pygame.image.load("button_flower.png"), pygame.image.load("button_flower_hover.png"))
 button_fern = Button(500, 555, pygame.image.load("button_fern.png"), pygame.image.load("button_fern_hover.png"))
 
@@ -148,7 +150,7 @@ while not exit:
                     print('plant!')
             # draw flower if mouse is clicked on ground
             if mouse_y > CANVAS_HEIGHT/2 and mouse_y < 543:
-                plants.add(Plant(current_plant, mouse_x, mouse_y - (current_plant['plant_height']/2)))
+                plants.add(Plant(current_plant, mouse_x, mouse_y - (current_plant['plant_height']/2), mouse_y))
             # TO DO -> allow for user to choose different plants
             #if menu.rect.collidepoint(mouse_x,mouse_y):
                 #pass
@@ -185,10 +187,11 @@ while not exit:
     canvas.blit(menu_background, (0,0)) 
 
     # draw menu buttons
-    if button_flower.draw():
+    if button_tree.draw():
+        current_plant = plant_library.tree
+    elif button_flower.draw():
         current_plant = plant_library.flower
-
-    if button_fern.draw():
+    elif button_fern.draw():
         current_plant = plant_library.fern
 
     # draw day counter

@@ -32,6 +32,24 @@ flower = { # need to resize all images
 ]
 }
 
+tree = {
+    "plant_width" : 101,
+    "plant_height" : 439,
+    "start_draw" : 10,
+    "images" :
+    [
+    pygame.image.load("plants/tree/tree0.png"),
+    pygame.image.load("plants/tree/tree1.png"),
+    pygame.image.load("plants/tree/tree2.png"),
+    pygame.image.load("plants/tree/tree3.png"),
+    pygame.image.load("plants/tree/tree4.png"),
+    pygame.image.load("plants/tree/tree5.png"),
+    pygame.image.load("plants/tree/tree6.png"),
+    pygame.image.load("plants/tree/tree7.png"),
+    pygame.image.load("plants/tree/tree8.png")
+]
+}
+
 white_flower = {
     "plant_width" : 53,
     "plant_height" : 122,
