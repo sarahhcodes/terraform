@@ -16,7 +16,8 @@ The game is coded in Python using the Pygame library.
 All graphics are designed and illustrated by me (Sarah Hudson).
 
 <hr />
-# About
+
+## About
 
 ### Project Structure:
 * **files**
