@@ -42,7 +42,7 @@ class Button:
 
         return action
 
-button_start = Button(56, 362, pygame.image.load("images/button_start.png"), pygame.image.load("images/button_start_hover.png"))
+button_start = Button(56, 362, pygame.image.load("images/buttons/button_start.png"), pygame.image.load("images/buttons/button_start_hover.png"))
 
 exit = False
 

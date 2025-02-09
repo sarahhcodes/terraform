@@ -14,9 +14,9 @@ CANVAS_HEIGHT = 600
 canvas = pygame.display.set_mode((CANVAS_WIDTH,CANVAS_HEIGHT))
 pygame.display.set_caption("terraform")
 
-start_background = pygame.image.load("images/start_background.png")
-background = pygame.image.load("images/land.png")
-menu_background = pygame.image.load("images/menu_background.png").convert_alpha()
+start_background = pygame.image.load("images/backgrounds/start_background.png")
+background = pygame.image.load("images/backgrounds/land.png")
+menu_background = pygame.image.load("images/backgrounds/menu_background.png").convert_alpha()
 
 # define background colours for different times of the day
 morning = (255, 238, 130)
@@ -94,14 +94,14 @@ plants = pygame.sprite.LayeredUpdates()
 canvas.fill(morning)
 
 # initalize buttons
-button_start = Button(56, 362, pygame.image.load("images/button_start.png"), pygame.image.load("images/button_start_hover.png"), pygame.image.load("images/button_start_hover.png"))
+button_start = Button(56, 362, pygame.image.load("images/buttons/button_start.png"), pygame.image.load("images/buttons/button_start_hover.png"), pygame.image.load("images/buttons/button_start_hover.png"))
 
-button_tree = Button(200, 555, pygame.image.load("images/button_tree.png"), pygame.image.load("images/button_tree_hover.png"), pygame.image.load("images/button_tree_select.png"))
-button_flower = Button(326, 545, pygame.image.load("images/button_flower.png"), pygame.image.load("images/button_flower_hover.png"), pygame.image.load("images/button_flower_select.png"))
-button_fern = Button(500, 560, pygame.image.load("images/button_fern.png"), pygame.image.load("images/button_fern_hover.png"), pygame.image.load("images/button_fern_select.png"))
+button_tree = Button(200, 555, pygame.image.load("images/buttons/button_tree.png"), pygame.image.load("images/buttons/button_tree_hover.png"), pygame.image.load("images/buttons/button_tree_select.png"))
+button_flower = Button(326, 545, pygame.image.load("images/buttons/button_flower.png"), pygame.image.load("images/buttons/button_flower_hover.png"), pygame.image.load("images/buttons/button_flower_select.png"))
+button_fern = Button(500, 560, pygame.image.load("images/buttons/button_fern.png"), pygame.image.load("images/buttons/button_fern_hover.png"), pygame.image.load("images/buttons/button_fern_select.png"))
 
-button_exit = Button(7, 5, pygame.image.load("images/button_exit.png"), pygame.image.load("images/button_exit_hover.png"), pygame.image.load("images/button_exit_hover.png"))
-button_reset = Button(670, 5, pygame.image.load("images/button_reset.png"), pygame.image.load("images/button_reset_hover.png"), pygame.image.load("images/button_reset_hover.png"))
+button_exit = Button(7, 5, pygame.image.load("images/buttons/button_exit.png"), pygame.image.load("images/buttons/button_exit_hover.png"), pygame.image.load("images/buttons/button_exit_hover.png"))
+button_reset = Button(670, 5, pygame.image.load("images/buttons/button_reset.png"), pygame.image.load("images/buttons/button_reset_hover.png"), pygame.image.load("images/buttons/button_reset_hover.png"))
 
 exit = False
 current_plant = plant_library.fern # start game with fern
