@@ -8,9 +8,9 @@ Maybe one day, as the result of your efforts, you'll be able to take off your he
 
 <hr />
 
-Terraform is a tiny game inspired in one part by flash mini games of the 2000s and in one part 2010s and 2020s Mars landing, desert beautification, and nuclear rehabilitation futurism.
+Terraform is a tiny game inspired in one part by flash mini games of the 2000s and in one part 2010s and 2020s interplantary exploration, desert beautification, and post-nuclear disaster rehabilitation futurism.
 
-It's also my final project for Harvard's CS50x course taken in 2024 and 2025.
+It's also my final project for Harvard's CS50x course which I took in 2024 and finished in early 2025.
 
 The game is coded in Python using the Pygame library.
 All graphics are designed and illustrated by me (Sarah Hudson).
@@ -38,7 +38,7 @@ All graphics are designed and illustrated by me (Sarah Hudson).
 ### Project Design
 The parameters for the final project for CS50x are very open, and I wanted to take the opportunity to learn to use the Pygame library and explore basic game development.
 
-The concept of this project is completely based around developing basic farm game mechanics.
+I based the concept of this project around developing basic farm game mechanics, and I hope to apply what I learnt throughout development to making more games in the future.
 
 #### Growing Plants
 The plants are sprites, and are created using the Plant constructor.
@@ -62,13 +62,15 @@ The menu to choose the plants is text based.
 *describe buttons*
 
 ### Game Art
-The game and all art assets are designed and illustrated by me. The font is Jack Armstrong BB, and I chose it because it emulates comic book lettering.
+The game and art assets are designed and illustrated by me.
 
-I used Procreate to color and ink the title screen and backgrounds. The line art of the plants were drawn by hand in my sketchbook and then digitally coloured in Procreate.
+The exception is the font, Jack Armstrong BB, which I chose because it emulates comic book lettering.
+
+I used Procreate to color and ink the title screen and backgrounds. The line art of the plants were drawn and inked by hand in my sketchbook and then digitally coloured in Procreate.
 
 I opted for a 800x600 canvas size to emulate the lower resolution look of flash games from the 2000s.
 
-My goal with the art was to create something that felt handmade and a bit retro.
+My goal with the art was to create something that felt handmade and a bit retro, so I opted for a stylized, illustrated look.
 
 ### Future Goals
 Beyond the scope of CS50, I want to expand the game. Here's some ways I'm thinking about doing this:
