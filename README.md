@@ -22,18 +22,18 @@ All graphics are designed and illustrated by me (Sarah Hudson).
 ### Project Structure
 * **files**
     * plant_library.py
-        contains all information on the individual plants, including dimensions and images.
+        * contains all information on the individual plants, including dimensions and images.
     * setup.py
-        the bulk of the project code.
+        * the bulk of the project code.
 * **images**
     * backgrounds
-        all images related to the backgrounds of the game's canvas.
+        * all images related to the backgrounds of the game's canvas.
     * buttons
-        all images related to clickable buttons (including inactive and hover states)
+        * all images related to clickable buttons (including inactive and hover states)
     * plants
-        all images for each growable plant, grouped in folders by plant.
+        * all images for each growable plant, grouped in folders by plant.
 * **terraform.py**
-    the Python file to be run to play the game.
+    * the Python file to be run to play the game.
 
 ### Project Design
 The parameters for the final project for CS50x are very open, and I wanted to take the opportunity to learn to use the Pygame library and explore basic game development.
