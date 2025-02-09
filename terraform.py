@@ -61,7 +61,6 @@ class Button:
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.clicked = False
-        # set up image so that it changes depending on button state
     
     def draw(self):
         action = False
@@ -87,6 +86,17 @@ class Button:
 
         return action
 
+# event handler
+def on_event(exit):
+    for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit = True
+                return exit
+            if event.type == pygame.MOUSEBUTTONDOWN and game_state == 1:
+                # draw plant if mouse is clicked on ground
+                if mouse_y > CANVAS_HEIGHT/2 and mouse_y < 543:
+                    plants.add(Plant(current_plant, mouse_x, mouse_y - (current_plant['plant_height']/2), mouse_y))
+
 # group for plants
 plants = pygame.sprite.LayeredUpdates()
 
@@ -106,14 +116,12 @@ button_reset = Button(670, 5, pygame.image.load("images/buttons/button_reset.png
 exit = False
 current_plant = plant_library.fern # start game with fern
 time_of_day = morning # start game in the morning
-game_state = 0
+game_state = 0 # 0 is start; 1 is main game
 
 # game loop
 while not exit:
-    if game_state == 0:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                exit = True
+    if game_state == 0: # start
+        exit = on_event(exit) # event handler
             
         canvas.blit(start_background, (0,0))
 
@@ -121,17 +129,10 @@ while not exit:
             game_state = 1
             
         pygame.display.update()
-    elif game_state == 1:
+    elif game_state == 1: # main game
         mouse_x, mouse_y = pygame.mouse.get_pos()
+        exit = on_event(exit) # event handler; also controls plant on click
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                exit = True
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                # draw plant if mouse is clicked on ground
-                if mouse_y > CANVAS_HEIGHT/2 and mouse_y < 543:
-                    plants.add(Plant(current_plant, mouse_x, mouse_y - (current_plant['plant_height']/2), mouse_y))
-                
         # in game clock
         clock.tick(FPS)
         game_hours += 1
