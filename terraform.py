@@ -4,8 +4,6 @@
 # do something with empty spaces on either side of the menu
 # add start page
 # add goal screen (make the landscape green)
-# add exit button
-# add reset button
 # tidy code
 
 import pygame
@@ -103,8 +101,12 @@ button_tree = Button(200, 555, pygame.image.load("images/button_tree.png"), pyga
 button_flower = Button(326, 555, pygame.image.load("images/button_flower.png"), pygame.image.load("images/button_flower_hover.png"))
 button_fern = Button(500, 555, pygame.image.load("images/button_fern.png"), pygame.image.load("images/button_fern_hover.png"))
 
+button_exit = Button(7, 5, pygame.image.load("images/button_exit.png"), pygame.image.load("images/button_exit_hover.png"))
+button_reset = Button(670, 5, pygame.image.load("images/button_reset.png"), pygame.image.load("images/button_reset_hover.png"))
+
 exit = False
 current_plant = plant_library.fern # start game with fern
+time_of_day = morning # start game in the morning
 
 # game loop
 while not exit:
@@ -120,13 +122,13 @@ while not exit:
             
     # in game clock
     clock.tick(FPS)
-    seconds = (pygame.time.get_ticks()-start_ticks)/1000
+    #seconds = (pygame.time.get_ticks()-start_ticks)/1000
     game_hours += 1
     
     # action for the end of each day
     # for this stage of testing, 1 day equals 6 seconds
     if game_hours == 6*FPS:
-        canvas.fill(morning)
+        time_of_day = morning
         game_hours = 0
         days += 1
         print(days)
@@ -136,12 +138,14 @@ while not exit:
             plant.grow()
 
     elif game_hours == 2*FPS:
-        canvas.fill(day)
+        time_of_day = day
     elif game_hours == 4*FPS:
-        canvas.fill(evening)
+        time_of_day = evening
 
     plants.update()
 
+    # draw background
+    canvas.fill(time_of_day)
     canvas.blit(background, (0,0))  
     canvas.blit(menu_background, (0,0)) 
 
@@ -154,5 +158,11 @@ while not exit:
         current_plant = plant_library.fern
     
     plants.draw(canvas)
+
+    # draw exit & reset buttons
+    if button_exit.draw():
+        exit = True # quit game
+    if button_reset.draw():
+        plants = pygame.sprite.LayeredUpdates() # reset plants
 
     pygame.display.update()
