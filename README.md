@@ -40,7 +40,7 @@ The parameters for the final project for CS50x are very open, and I wanted to ta
 
 The concept of this project is completely based around developing basic farm game mechanics.
 
-## Growing Plants
+#### Growing Plants
 *To do: growing plants*
 The plants are sprites, and are created using the Plant constructor.
 
@@ -50,10 +50,10 @@ To implement basic perspective, each plant has a layer which corresponds to the 
 
 Each plant instance keeps track of its in game age. The images for each growing plant are stored in the [Plant Library](files/plant_library.py), and the image drawn updates with the age of the selected plant until the plant is fully grown. (For example, on Day 0 the plant will be represented by Image 0, on Day 1 the plant will be represented by Image 1, and so on.)
 
-## Game Clock
+#### Game Clock
 *To do: game clock*
 
-## Menu Desin
+#### Menu Design
 *To do: menu design*
 
 ### Game Art
