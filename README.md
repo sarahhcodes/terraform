@@ -41,7 +41,6 @@ The parameters for the final project for CS50x are very open, and I wanted to ta
 The concept of this project is completely based around developing basic farm game mechanics.
 
 #### Growing Plants
-*To do: growing plants*
 The plants are sprites, and are created using the Plant constructor.
 
 When the player clicks on the ground, a new instance of the Plant constructor is added to the plants group.
@@ -51,18 +50,30 @@ To implement basic perspective, each plant has a layer which corresponds to the 
 Each plant instance keeps track of its in game age. The images for each growing plant are stored in the [Plant Library](files/plant_library.py), and the image drawn updates with the age of the selected plant until the plant is fully grown. (For example, on Day 0 the plant will be represented by Image 0, on Day 1 the plant will be represented by Image 1, and so on.)
 
 #### Game Clock
-*To do: game clock*
+The game is run at 60 frames per second, and each day in the game lasts 6 seconds.
+
+The passing of each day is indicated visually through changing the colour of the sky from yellow (for morning) to blue (for midday) to purple (for evening).
+
+At the end of each day, all plants are updated and "age" forward one day.
 
 #### Menu Design
-*To do: menu design*
+The menu to choose the plants is text based.
+
+*describe buttons*
 
 ### Game Art
+The game and all art assets are designed and illustrated by me. The font is Jack Armstrong BB, and I chose it because it emulates comic book lettering.
 
-*To do*
+I used Procreate to color and ink the title screen and backgrounds. The line art of the plants were drawn by hand in my sketchbook and then digitally coloured in Procreate.
+
+I opted for a 800x600 canvas size to emulate the lower resolution look of flash games from the 2000s.
+
+My goal with the art was to create something that felt handmade and a bit retro.
 
 ### Future Goals
 Beyond the scope of CS50, I want to expand the game. Here's some ways I'm thinking about doing this:
 
+* Make game longer.
 * Add story elements.
 * Add challenge to plant growth.
 * Add goal - maybe one day our astronaut will be able to take off their helmet and enjoy the air of the (currently toxic) enviroment.

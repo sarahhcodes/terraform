@@ -137,7 +137,6 @@ def run():
                 time_of_day = morning
                 game_hours = 0
                 days += 1
-                print(days)
                 
                 # update plants
                 for plant in plants:
