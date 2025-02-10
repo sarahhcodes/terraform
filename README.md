@@ -10,7 +10,7 @@ Maybe one day, as the result of your efforts, you'll be able to take off your he
 
 Terraform is a tiny game inspired in one part by flash mini games of the 2000s and in one part 2010s and 2020s interplantary exploration, desert beautification, and post-nuclear disaster rehabilitation futurism.
 
-It's also my final project for Harvard's CS50x course which I took in 2024 and finished in early 2025.
+It's also my final project for [Harvard's CS50x course](https://cs50.harvard.edu/x/2025/) which I took in 2024 and finished in early 2025.
 
 The game is coded in Python using the Pygame library.
 All graphics are designed and illustrated by me (Sarah Hudson).
@@ -33,10 +33,10 @@ All graphics are designed and illustrated by me (Sarah Hudson).
     * plants
         * all images for each growable plant, grouped in folders by plant.
 * **terraform.py**
-    * the Python file to be run to play the game.
+    * the Python file that starts the game.
 
 ### Project Design
-The parameters for the final project for CS50x are very open, and I wanted to take the opportunity to learn to use the Pygame library and explore basic game development.
+The parameters for the final project for CS50x are [very open](https://cs50.harvard.edu/x/2025/project/), so I wanted to take this opportunity to learn to use the Pygame library and explore basic game development.
 
 I based the concept of this project around developing basic farm game mechanics, and I hope to apply what I learnt throughout development to making more games in the future.
 
@@ -56,10 +56,12 @@ The passing of each day is indicated visually through changing the colour of the
 
 At the end of each day, all plants are updated and "age" forward one day.
 
-#### Menu Design
-The menu to choose the plants is text based.
+#### Button Design
+All player interactivity involving buttons is text-based but uses images as buttons.
 
-*describe buttons*
+As a reference, while creating all the buttons in the game I followed [this video tutorial by Coding with Russ](https://www.youtube.com/watch?v=G8MYGDf_9ho).
+
+I chose to do an onClick event for the buttons that select the plants to give some indication that the player selected a plant. I did not set this up for the start, exit, and reset buttons as there is an immediate action happens when these buttons are selected.
 
 ### Game Art
 The game and art assets are designed and illustrated by me.
@@ -73,9 +75,13 @@ I opted for a 800x600 canvas size to emulate the lower resolution look of flash 
 My goal with the art was to create something that felt handmade and a bit retro, so I opted for a stylized, illustrated look.
 
 ### Future Goals
-Beyond the scope of CS50, I want to expand the game. Here's some ways I'm thinking about doing this:
+At the moment, this game is a small toy, and I'd like to expand it beyond the scope of CS50.
+
+Here's some ways I'm thinking about doing this:
 
 * Make game longer.
 * Add story elements.
 * Add challenge to plant growth.
 * Add goal - maybe one day our astronaut will be able to take off their helmet and enjoy the air of the (currently toxic) enviroment.
+
+Follow me on [Instagram](http://instagram.com/sarahhmakes) or [Mastodon](http://mastodon.art/@sarahhmakes) to see what happens next!
