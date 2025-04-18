@@ -8,7 +8,7 @@ Maybe one day, as the result of your efforts, you'll be able to take off your he
 
 <hr />
 
-Terraform is a tiny game inspired in one part by flash mini games of the 2000s and in one part 2010s and 2020s dreams of interplantary exploration, desert beautification, and post-nuclear disaster rehabilitation futurism.
+Terraform is a tiny game inspired in one part by flash mini games of the 2000s and in one part 2010s and 2020s dreams of interplantary exploration, desert beautification, and post-nuclear disaster rehabilitation.
 
 It's also my final project for [Harvard's CS50x course](https://cs50.harvard.edu/x/2025/) which I took in 2024 and finished in early 2025.
 
